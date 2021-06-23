@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { AuthContext } from "../App";
 
 export function NewRoom() {
-  const { signInWithGoogle, user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   return (
     <div id="page-auth">
       <aside>
