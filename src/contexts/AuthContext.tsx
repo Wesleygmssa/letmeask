@@ -16,8 +16,10 @@ type AuthContextProviderProps = {
   children: ReactNode;
 };
 
+//Criação do hooks para utilizar informação globais na aplicação
 export const AuthContext = createContext({} as AuthContextType);
 
+//Função que está sendo chamada APP envolvendo toda a informação para poder passar os dados
 export function AuthContextProvider(props: AuthContextProviderProps) {
   const [user, setUser] = useState<User>();
 
@@ -64,6 +66,7 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
   }
 
   return (
+    //Retorando os dados hooks
     <AuthContext.Provider value={{ user, signInWithGoogle }}>
       {props.children}
     </AuthContext.Provider>
