@@ -45,6 +45,7 @@ export function Room() {
   const params = useParams<RoomParams>();
   const [newQuestion, setNewQuestion] = useState("");
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [title, setTitle] = useState("");
 
   const roomId = params.id;
 
@@ -67,6 +68,8 @@ export function Room() {
           };
         }
       );
+      setTitle(databaseRoom.title);
+      setQuestions(parsedQuestions);
     });
   }, [roomId]);
 
@@ -115,8 +118,8 @@ export function Room() {
       </header>
       <main>
         <div className="room-title">
-          <h1>Sala React</h1>
-          <span>4 perguntas</span>
+          <h1>Sala {title}</h1>
+          {questions.length > 0 && <span>{questions.length} pergunta(s)</span>}
         </div>
 
         <form onSubmit={handleSendQuestion}>
