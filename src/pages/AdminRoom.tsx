@@ -66,7 +66,10 @@ export function AdinRoom() {
               history.push(`/`);
             }}
           />
-          <RoomCode code={roomId} />
+          <div>
+            <RoomCode code={roomId} />
+            <Button isOutlined={true}>Encerrar sala</Button>
+          </div>
         </div>
       </header>
       <main>
