@@ -1,4 +1,3 @@
-import { FormEvent, useState } from "react";
 import { useHistory } from "react-router";
 import { useParams } from "react-router-dom";
 import logoImg from "../assets/images/logo.svg";
@@ -6,11 +5,12 @@ import { Button } from "../components/Button";
 import { RoomCode } from "../components/RoomCode";
 import { useAuth } from "../hooks/useAuth";
 import toast, { Toaster } from "react-hot-toast";
+import deleteImg from "../assets/images/delete.svg";
 
 import "../styles/room.scss";
-import { database } from "../services/firebase";
 import { Question } from "../components/Question";
 import { useRoom } from "../hooks/useRoom";
+import { database } from "../services/firebase";
 
 type RoomParams = {
   id: string;
@@ -19,13 +19,29 @@ type RoomParams = {
 const notify = () => toast.error("You must be logged in.");
 
 export function AdinRoom() {
+  const history = useHistory();
   const { user } = useAuth();
   const params = useParams<RoomParams>();
 
   const roomId = params.id;
   const { questions, title } = useRoom(roomId);
 
-  const history = useHistory();
+  async function handleEndRoom() {
+    await database.ref(`rooms/${roomId}`).update({
+      endedAt: new Date(),
+    });
+
+    history.push("/");
+  }
+
+  async function handleDeleteQuestion(questionId: string) {
+    if (window.confirm("Tem certeza que você deseja excluir esta pergunta?")) {
+      const questionRef = await database
+        .ref(`rooms/${roomId}/questions/${questionId}`)
+        .remove();
+    }
+  }
+
   return (
     <div className="page-room">
       <Toaster />;
@@ -40,7 +56,14 @@ export function AdinRoom() {
           />
           <div>
             <RoomCode code={roomId} />
-            <Button isOutlined={true}>Encerrar sala</Button>
+            <Button
+              isOutlined={true}
+              onClick={() => {
+                handleEndRoom();
+              }}
+            >
+              Encerrar sala
+            </Button>
           </div>
         </div>
       </header>
@@ -57,7 +80,16 @@ export function AdinRoom() {
                 key={question.id}
                 content={question.content}
                 author={question.author}
-              />
+              >
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleDeleteQuestion(question.id);
+                  }}
+                >
+                  <img src={deleteImg} alt="remover pergunta" />
+                </button>
+              </Question>
             );
           })}
         </div>
