@@ -10,7 +10,7 @@ import toast, { Toaster } from "react-hot-toast";
 import "../styles/room.scss";
 import { database } from "../services/firebase";
 import { Question } from "../components/Question";
-import { useRoom } from "../contexts/useRoom";
+import { useRoom } from "../hooks/useRoom";
 
 type RoomParams = {
   id: string;

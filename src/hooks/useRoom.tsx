@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "./useAuth";
 import { database } from "../services/firebase";
 
 type QuestionType = {
