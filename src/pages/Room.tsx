@@ -7,10 +7,11 @@ import { RoomCode } from "../components/RoomCode";
 import { useAuth } from "../hooks/useAuth";
 import toast, { Toaster } from "react-hot-toast";
 
-import "../styles/room.scss";
 import { database } from "../services/firebase";
 import { Question } from "../components/Question";
 import { useRoom } from "../hooks/useRoom";
+
+import "../styles/room.scss";
 
 type RoomParams = {
   id: string;
