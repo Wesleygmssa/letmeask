@@ -91,23 +91,32 @@ export function AdinRoom() {
                 key={question.id}
                 content={question.content}
                 author={question.author}
+                isAnswered={question.isAnswered}
+                isHightlighted={question.isHighlighted}
               >
-                <button
-                  type="button"
-                  onClick={() => {
-                    handleCheckQuestionAsAnswered(question.id);
-                  }}
-                >
-                  <img src={checkImg} alt="Marcar pergunta como respondida" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    handleHightlightQuestion(question.id);
-                  }}
-                >
-                  <img src={answerImg} alt="Dar destaque à pergunta" />
-                </button>
+                {!question.isAnswered && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        handleCheckQuestionAsAnswered(question.id);
+                      }}
+                    >
+                      <img
+                        src={checkImg}
+                        alt="Marcar pergunta como respondida"
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        handleHightlightQuestion(question.id);
+                      }}
+                    >
+                      <img src={answerImg} alt="Dar destaque à pergunta" />
+                    </button>
+                  </>
+                )}
                 <button
                   type="button"
                   onClick={() => {
